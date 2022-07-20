@@ -275,7 +275,8 @@ window.addEventListener('DOMContentLoaded', function() {
             <div class="modal__content">
                 <div class="modal__close" data-close>x</div>
                 <div class="modal__title">${message}</div>
-            </div>`;
+            </div>
+        `;
 
         document.querySelector(".modal").append(thanksModal);
         setTimeout(()=>{
@@ -285,6 +286,11 @@ window.addEventListener('DOMContentLoaded', function() {
             closeModal(); 
         }, 4000);
     }
+
+    fetch("http://localhost:3000/menu")
+        .then(data => data.json())
+        .then(result => console.log(result));  
+
 });
 
 
