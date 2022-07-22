@@ -6,7 +6,7 @@ window.addEventListener('DOMContentLoaded', function() {
 		tabsContent = document.querySelectorAll('.tabcontent'),
 		tabsParent = document.querySelector('.tabheader__items');
 
-	function hideTabContent() {
+	const hideTabContent = function() {
         
         tabsContent.forEach(item => {
             item.classList.add('hide');
@@ -18,7 +18,7 @@ window.addEventListener('DOMContentLoaded', function() {
         });
 	}
 
-	function showTabContent(i = 0) {
+	const showTabContent = function(i = 0) {
         tabsContent[i].classList.add('show', 'fade');
         tabsContent[i].classList.remove('hide');
         tabs[i].classList.add('tabheader__item_active');
@@ -43,12 +43,12 @@ window.addEventListener('DOMContentLoaded', function() {
 
     const deadline = '2022-12-01';
 
-    function getTimeRemaining(endtime) {
+    const getTimeRemaining = function(endtime) {
         const t = Date.parse(endtime) - Date.parse(new Date()),
-            days = Math.floor( (t/(1000*60*60*24)) ),
-            seconds = Math.floor( (t/1000) % 60 ),
-            minutes = Math.floor( (t/1000/60) % 60 ),
-            hours = Math.floor( (t/(1000*60*60) % 24) );
+              days = Math.floor( (t/(1000*60*60*24)) ),
+              seconds = Math.floor( (t/1000) % 60 ),
+              minutes = Math.floor( (t/1000/60) % 60 ),
+              hours = Math.floor( (t/(1000*60*60) % 24) );
 
         return {
             'total': t,
@@ -59,22 +59,23 @@ window.addEventListener('DOMContentLoaded', function() {
         };
     }
 
-    function getZero(num){
+    const getZero = function(num) {
         if (num >= 0 && num < 10) { 
             return '0' + num;
-        } else {
+        } 
+        else {
             return num;
         }
     }
 
-    function setClock(selector, endtime) {
+    const setClock = function(selector, endtime) {
 
         const timer = document.querySelector(selector),
-            days = timer.querySelector("#days"),
-            hours = timer.querySelector('#hours'),
-            minutes = timer.querySelector('#minutes'),
-            seconds = timer.querySelector('#seconds'),
-            timeInterval = setInterval(updateClock, 1000);
+              days = timer.querySelector("#days"),
+              hours = timer.querySelector('#hours'),
+              minutes = timer.querySelector('#minutes'),
+              seconds = timer.querySelector('#seconds'),
+              timeInterval = setInterval(updateClock, 1000);
 
         updateClock();
 
@@ -97,24 +98,24 @@ window.addEventListener('DOMContentLoaded', function() {
     // Modal
 
     const modalTrigger = document.querySelectorAll('[data-modal]'),
-        modal = document.querySelector('.modal');
+          modal = document.querySelector('.modal');
 
-    modalTrigger.forEach(btn => {
-        btn.addEventListener('click', openModal);
-    });
-
-    function closeModal() {
+    const closeModal = function() {
         modal.classList.add('hide');
         modal.classList.remove('show');
         document.body.style.overflow = '';
     }
 
-    function openModal() {
+    const openModal = function() {
         modal.classList.add('show');
         modal.classList.remove('hide');
         document.body.style.overflow = 'hidden';
         clearInterval(modalTimerId);
     }
+
+    modalTrigger.forEach(btn => {
+        btn.addEventListener('click', openModal);
+    });
 
     modal.addEventListener('click', (e) => {
         if (e.target === modal || e.target.getAttribute("data-close") == "") {
@@ -129,9 +130,8 @@ window.addEventListener('DOMContentLoaded', function() {
     });
 
     const modalTimerId = setTimeout(openModal, 300000);
-    // Изменил значение, чтобы не отвлекало
 
-    function showModalByScroll() {
+    const showModalByScroll = function() {
         if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
             openModal();
             window.removeEventListener('scroll', showModalByScroll);
@@ -219,11 +219,9 @@ window.addEventListener('DOMContentLoaded', function() {
         failure: "Smth went wrong",
     };
 
-    forms.forEach(item => {
-        postData(item);
-    });
 
-    function postData(form) {
+
+    const postData = function(form) {
         form.addEventListener("submit",(e) => {
             e.preventDefault();
 
@@ -263,7 +261,11 @@ window.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    function showThanksModal(message) {
+    forms.forEach(item => {
+        postData(item);
+    });
+
+    const showThanksModal = function(message) {
         const prevModal = document.querySelector(".modal__dialog");
 
         prevModal.classList.add("hide");
@@ -279,7 +281,7 @@ window.addEventListener('DOMContentLoaded', function() {
         `;
 
         document.querySelector(".modal").append(thanksModal);
-        setTimeout(()=>{
+        setTimeout(() => {
             thanksModal.remove();
             prevModal.classList.add("show");
             prevModal.classList.remove("hide");
