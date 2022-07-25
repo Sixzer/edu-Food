@@ -139,7 +139,7 @@ window.addEventListener('DOMContentLoaded', function() {
     }
     window.addEventListener('scroll', showModalByScroll);
 
-    // Используем классы для создание карточек меню
+    // MenuCard
 
     class MenuCard {
         constructor(src, alt, title, descr, price, parentSelector, ...classes) {
@@ -177,15 +177,15 @@ window.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    const getResource = async(url) => {
-        const result = await fetch(url);
+    // const getResource = async(url) => {
+    //     const result = await fetch(url);
          
-        if (!result.ok) {
-            throw new Error(`Coudnt fetch ${url}, status: ${result.status}`);
-        }
+    //     if (!result.ok) {
+    //         throw new Error(`Coudnt fetch ${url}, status: ${result.status}`);
+    //     }
 
-        return await result.json();
-    }
+    //     return await result.json();
+    // }
 
     // 1 WAY
     // getResource("http://localhost:3000/menu")
@@ -227,14 +227,14 @@ window.addEventListener('DOMContentLoaded', function() {
                 new MenuCard(img, altimg, title, descr, price, ".menu .container").render();
             });
         });
-    //Forms
+    // Forms
 
     const forms = document.querySelectorAll("form");
 
     const message = {
         loadling: "icons/spinner.svg",
-        success: "Well done",
-        failure: "Smth went wrong",
+        success: "Заявка принята!\nМы скоро с вами свяжемся",
+        failure: "Что-то пошло не так",
     };
 
     const postData = async(url, data) => {
@@ -306,6 +306,57 @@ window.addEventListener('DOMContentLoaded', function() {
             closeModal(); 
         }, 4000);
     }
+
+    // Slider
+
+    const slides = document.querySelectorAll(".offer__slide"),
+          previous = document.querySelector(".offer__slider-prev"),
+          next = document.querySelector(".offer__slider-next"),
+          current = document.querySelector("#current"),
+          total = document.querySelector("#total")
+    
+    let slideIndex = 1;
+
+    const showSlides = function(n) {
+        if (n > slides.length) {
+            slideIndex = 1;
+        }
+        if (n < 1) {
+            slideIndex = slides.length;
+        }
+
+        slides.forEach(item => item.style.display = "none");
+
+        slides[slideIndex - 1].style.display = "block";
+
+        if(slides.length < 10) {
+            current.textContent = `0${slideIndex}`;
+        }
+        else {
+            current.textContent = slideIndex;
+        }
+    }
+
+    showSlides(slideIndex);
+
+    if (slides.length < 10) {
+        total.textContent = `0${slides.length}`;
+    }
+    else {
+        total.textContent = `${slides.length}`;
+    }
+
+    const changeSlide = function(n) {
+        showSlides(slideIndex += n);
+    }
+
+    previous.addEventListener("click", () => {
+        changeSlide(-1);
+    })
+
+    next.addEventListener("click", () => {
+        changeSlide(1);
+    })
 });
 
 
