@@ -484,6 +484,79 @@ window.addEventListener('DOMContentLoaded', function() {
     // next.addEventListener("click", () => {
     //     changeSlide(1);
     // })
+
+    //CALC  
+    const kcalResult = document.querySelector(".calculating__result span");
+    let gender = "female",
+        height, weight, age, 
+        ratio = 1.375;
+
+    const calculateResult = function() {  
+        if (!gender || !height || !weight || !age || !ratio) {
+            kcalResult.textContent = "Error";
+            return;
+        }
+
+        if (gender === "female") {
+            kcalResult.textContent = Math.round((447.6 + (9.2 * weight) + (3.1 * height) - (4.3 * age)) * ratio);
+        }
+        else {
+            kcalResult.textContent = Math.round((88.36 + (13.4 * weight) + (4.8 * height) - (5.7 * age)) * ratio);
+        }
+    }
+
+    calculateResult();
+
+    const getStaticInfo = function(parentSelector, activeClass) {
+        const elements = document.querySelectorAll(`${parentSelector} div`);
+
+        elements.forEach(el => {
+            el.addEventListener("click", (e) => {
+                if (e.target.getAttribute("data-ratio")) {
+                    ratio = +e.target.getAttribute("data-ratio");
+                } 
+                else {
+                    gender = e.target.getAttribute("id");
+                }
+    
+                elements.forEach(el => {
+                    el.classList.remove(activeClass);
+                });
+    
+                e.target.classList.add(activeClass);
+    
+                calculateResult();
+            });
+        });
+
+    }
+
+    getStaticInfo("#gender", "calculating__choose-item_active");
+    getStaticInfo(".calculating__choose_big", "calculating__choose-item_active");
+
+    const getDynamicInfo = function(selector) {
+        const input = document.querySelector(selector);
+
+        input.addEventListener("input", () => {
+            switch(input.getAttribute("id")) {
+                case "height":
+                    height = +input.value;
+                    break;
+                case "weight":
+                    weight = +input.value;
+                    break;
+                case "age":
+                    age = +input.value;
+                    break;
+            }
+
+            calculateResult();
+        }); 
+    }
+
+    getDynamicInfo("#height");
+    getDynamicInfo("#weight");
+    getDynamicInfo("#age");
 });
 
 
