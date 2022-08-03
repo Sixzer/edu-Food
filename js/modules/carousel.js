@@ -1,13 +1,13 @@
-const carousel = function() {
+const carousel = function({container, slide, nextArrow, prevArrow, totalCounter, currentCounter, wrapper, field}) {
 
-    const slides = document.querySelectorAll(".offer__slide"),
-          slider = document.querySelector(".offer__slider"),
-          previous = document.querySelector(".offer__slider-prev"),
-          next = document.querySelector(".offer__slider-next"),
-          current = document.querySelector("#current"),
-          total = document.querySelector("#total"),
-          slidesWrapper = document.querySelector(".offer__slider-wrapper"),
-          slidesField = document.querySelector(".offer__slider-inner"),
+    const slides = document.querySelectorAll(slide),
+          slider = document.querySelector(container),
+          previous = document.querySelector(prevArrow),
+          next = document.querySelector(nextArrow),
+          current = document.querySelector(currentCounter),
+          total = document.querySelector(totalCounter),
+          slidesWrapper = document.querySelector(wrapper),
+          slidesField = document.querySelector(field),
           width = window.getComputedStyle(slidesWrapper).width;
     
     let slideIndex = 1;
@@ -177,4 +177,4 @@ const carousel = function() {
     // })
 };
 
-module.exports = carousel;
+export default carousel;

@@ -88,4 +88,4 @@ const menuCards = function() {
         });
 };
 
-module.exports = menuCards;
+export default menuCards;

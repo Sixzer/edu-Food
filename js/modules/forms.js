@@ -1,24 +1,15 @@
-const forms = function() {
+import { closeModal, openModal } from "./modal";
+import { postData } from "../services/services";
 
-    const forms = document.querySelectorAll("form");
+const forms = function(formSelector, modalTimerId) {
+
+    const forms = document.querySelectorAll(formSelector);
 
     const message = {
         loadling: "icons/spinner.svg",
         success: "Заявка принята!\nМы скоро с вами свяжемся",
         failure: "Что-то пошло не так",
     };
-
-    const postData = async(url, data) => {
-        const result = await fetch(url, {
-            method: "POST",
-                headers: {
-                    "Content-type": "application/JSON"
-                },
-                body: data
-
-        });
-        return await result.json();
-    }
 
     const bindPostData = function(form) {
         form.addEventListener("submit",(e) => {
@@ -58,7 +49,7 @@ const forms = function() {
         const prevModal = document.querySelector(".modal__dialog");
 
         prevModal.classList.add("hide");
-        openModal();
+        openModal(".modal", modalTimerId);
 
         const thanksModal = document.createElement("div");
         thanksModal.classList.add("modal__dialog");
@@ -74,10 +65,10 @@ const forms = function() {
             thanksModal.remove();
             prevModal.classList.add("show");
             prevModal.classList.remove("hide");
-            closeModal(); 
+            closeModal(".modal"); 
         }, 4000);
     }
 
 };
 
-module.exports = forms;
+export default forms;
